@@ -15,13 +15,13 @@ class Game {
         
     
     public:
-        Player player1;
-        Player player2;
+        Player p1;
+        Player p2;
 
         //Empty constructor - not default since there's another one
         Game(){};
         // Parametized constructor
-        Game(Player player1, Player player2);
+        Game(Player p1, Player p2);
 
         void setPlayers(Player, Player);
         
