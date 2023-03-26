@@ -1,7 +1,6 @@
 #ifndef CARD_H
 #define CARD_H
 
-#define STACK 52
 #include <iostream>
 
 using namespace std;

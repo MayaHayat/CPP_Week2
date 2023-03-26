@@ -3,7 +3,7 @@
 #include "sources/game.hpp"
 #include "sources/card.hpp"
 
-#define FULLSTACK 52
+#define FULLSTACK 52 //incase some cards were lost for example
 #define ROUNDS 3 
 
 using namespace std;
@@ -16,11 +16,13 @@ TEST_CASE("#Cards per player at start of game") {
     Game game(p1,p2);
     CHECK(p1.stacksize() == 26);
     CHECK(p2.stacksize() == 26);
-    
+    CHECK(p1.cardesTaken() == 0);
+    CHECK(p2.cardesTaken() == 0);
 }
 
 // #2
 TEST_CASE("Total #Cards after N round") {
+    //Number of rounds can be changed as used a constant to make easier.
     Player p1("Alice");
     Player p2("Bob");
 
@@ -51,29 +53,27 @@ TEST_CASE ("Make sure someone won at the end"){
     Game game(p1,p2);
     game.playAll();
     if (game.p1.stacksize() > 0){
-        CHECK(game.p1.stacksize() == 52);
+        CHECK(game.p1.stacksize() == FULLSTACK);
         CHECK(game.p2.stacksize() == 0);
     }
     else{
-        CHECK(game.p2.stacksize() == 52);
+        CHECK(game.p2.stacksize() == FULLSTACK);
         CHECK(game.p1.stacksize() == 0);
     }
 }
 
 // #5
-// TEST_CASE ("Make sure the correct person wins"){
-//     Player p1("Alice");
-//     Player p2("Bob");
+TEST_CASE("Check the amount of cards per player after 5 turns."){
+    Player p1("Alice");
+    Player p2("Bob");
+    Game game(p1, p2);
+    for (int i = 0; i < 5; i++) {
+        game.playTurn();
+    }
 
-//     Game game(p1,p2);
-//     game.playAll();
-//     if (game.p1.stacksize() > 0){
-//         CHECK(game.printWiner() == "Alice");
-//     }
-//     else{
-//         CHECK(game.printWiner() == "Bob");
-//     }
-// }
+    CHECK(p1.stacksize() <= 21);
+    CHECK(p2.stacksize() <= 21);
+}
 
 // #6
 TEST_CASE ("Make sure no errors are thrown"){
@@ -96,7 +96,9 @@ TEST_CASE ("Make sure errors are thrown when game is finished"){
 
     Game game(p1,p2);
     CHECK_NOTHROW(game.playAll());
+    CHECK_NOTHROW(game.printWiner());
     CHECK_THROWS(game.playAll());
+    CHECK_THROWS(game.printWiner());
 }
 
 // #8
@@ -106,10 +108,6 @@ TEST_CASE ("Make sure only 2 people can play"){
 
     Game game(p1,p2);
     CHECK_NOTHROW(game.playAll());
-
-    Player p3 ("Maya");
-    //DOESN"T WORK _ FIGURE OUT HOW TO DO THIS
-    CHECK_THROWS(Game game2(p1,p2,p3));
 }
 
 

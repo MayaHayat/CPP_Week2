@@ -1,7 +1,6 @@
 #ifndef GAME_H
 #define GAME_H
 
-#define STACK 52
 #include <iostream>
 #include "player.hpp"
 
@@ -16,13 +15,13 @@ class Game {
         
     
     public:
-        Player p1;
-        Player p2;
+        Player player1;
+        Player player2;
 
         //Empty constructor - not default since there's another one
         Game(){};
         // Parametized constructor
-        Game(Player x, Player y);
+        Game(Player player1, Player player2);
 
         void setPlayers(Player, Player);
         
