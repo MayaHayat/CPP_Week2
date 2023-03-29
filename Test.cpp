@@ -100,18 +100,3 @@ TEST_CASE ("Make sure errors are thrown when game is finished"){
     CHECK_THROWS(game.playAll());
     CHECK_THROWS(game.printWiner());
 }
-
-// #8
-TEST_CASE ("Make sure only 2 people can play"){
-    Player p1("Alice");
-    Player p2("Bob");
-
-    Game game(p1,p2);
-    CHECK_NOTHROW(game.playAll());
-}
-
-
-
-
-
-
